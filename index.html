@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>buky</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,6 +84,7 @@ h1{margin:.2rem 0 .4rem;font-size:2.1rem;max-width:none}
 #cv{-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 48px),transparent calc(100% - 22px));mask-image:linear-gradient(to bottom,#000 calc(100% - 48px),transparent calc(100% - 22px))}
 }
 .gal{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:rgba(255,244,237,.97);color:#3b2a2c;--ivory:#3b2a2c;--mute:rgba(59,42,44,.66);opacity:0;transition:opacity .9s ease}
+.gal,#galStage,.ph{touch-action:none;-webkit-touch-callout:none}
 .gal[hidden]{display:none}
 .gal.open{opacity:1}
 #galStage{position:relative;width:min(86vw,400px);height:min(72vh,540px);display:grid;place-items:center;cursor:pointer;user-select:none;-webkit-user-select:none}
@@ -126,7 +127,7 @@ h1{margin:.2rem 0 .4rem;font-size:2.1rem;max-width:none}
     <p class="l" id="l1" style="--i:0">Aku sering sekali mikirin buky</p>
     <p class="l" style="--i:1">Dan mungkin begitulah bunga-bunga ini tumbuh.</p>
     <p class="l" style="--i:2"><em>Dibuat dengan sedikit pikiran, dan banyak sekali rasa terima kasih.</em></p>
-    <p class="sig">khusus untuk buky</p>
+    <p class="sig">insyaallah bunga benerannya nyusul ya(•ᴗ•) </p>
     <button class="more" id="more" type="button">Sekali lagi</button>
   </div>
   <button class="ctl" id="back" type="button">Kembali ke bunga</button>
@@ -563,6 +564,10 @@ $('skip').addEventListener('click',e=>{e.stopPropagation();endIntro();skipScene&
 resize();
 let rq=0;const rs=()=>{cancelAnimationFrame(rq);rq=requestAnimationFrame(resize)};
 addEventListener('resize',rs);
+['gesturestart','gesturechange','gestureend'].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+document.addEventListener('dblclick',e=>e.preventDefault());
+let ltap=0;document.addEventListener('touchend',e=>{const n=Date.now();if(n-ltap<350&&!(e.target.closest&&e.target.closest('button')))e.preventDefault();ltap=n},{passive:false});
+document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
 if(window.ResizeObserver){const ro=new ResizeObserver(rs);ro.observe($('head'));ro.observe($('foot'))}
 document.fonts&&document.fonts.ready.then(rs);
 requestAnimationFrame(frame);
